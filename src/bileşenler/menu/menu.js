@@ -34,24 +34,28 @@ let menuElemanlari = [
 
   Adım 6: 'menuYapici' fonksiyonunu ve 'menuElemanlari' dizisini kullanarak menüyü oluşturun, ve döndürülen menüyü header'e ekleyin.
 */
-const menu =document.getElementsByClassName("header")
-function admenu(obj1){
-const menuYapici=document.createElement("div") ; 
-const elements=document.createElement("ul");
-const elements1=document.createElement("li");
-elements1.textContent=obj1;
-elements.appendChild(elements1);
-menuYapici.appendChild(elements);
-for (let i=0;i<menu.length;i++){
-  menu[i].appendChild(menuYapici);
+function menuYapici(menuList) {
+  const bodyEl = document.getElementsByClassName("header")[0];
+  const menuContainer = document.createElement("div");
+  const elements = document.createElement("ul");
+  menuContainer.classList.add("menu");
+  menuContainer.appendChild(elements);
+
+  menuList.map((liItem) => {
+    const menuItem = document.createElement("li");
+    elements.appendChild(menuItem);
+    menuItem.textContent = liItem;
+    // return menuItem;
+  });
+
+  bodyEl.appendChild(menuContainer);
+  const button1 = document.querySelector(".menu-button");
+  button1.addEventListener("click", () => {
+    menuContainer.classList.toggle("menu--open");
+  });
 }
 
-const button1=document.querySelector(".menu-button");
-button1.addEventListener("click",()=>{
-button1.classList.toggle("menu--open")});
+menuYapici(menuElemanlari);
 
-return menu;
-}
-menuElemanlari.map(admenu);
 
 

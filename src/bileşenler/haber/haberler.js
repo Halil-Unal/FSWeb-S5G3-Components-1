@@ -115,38 +115,49 @@ const data = [
   Adım 5: Veri dizisine yeni haber nesnesi eklemeyi deneyin. Diğer verilerle aynı yapıda olmasına dikkat edin.
   Eklediğiniz yeni haberi görmek için sayfayı yenileyin.
 */
-const component = document.getElementsByClassName("articles");
+const articlesContainer = document.getElementsByClassName("articles")[0];
+// + articles'ı seç
+/*
 
-function addnews(obj){
-  const haberYapici=document.createElement("div");
-const title =document.createElement("h2");
-title.textContent=obj.baslik;
-const date =document.createElement("p");
-date.classList.add("tarih");
-date.textContent=obj.tarih;
-const paragraph1 =document.createElement("p")
-paragraph1.textContent=obj.ilkParagraf;
-const paragraph2 =document.createElement("p")
-paragraph2.textContent=obj.ikinciParagraf;
-const paragraph3 =document.createElement("p")
-paragraph3.textContent=obj.ucuncuParagraf;
+  Adım 2: Hala `haberYapici` içindeyiz, span.expandButton 'a bir click event dinleyici ekleyin.
+  Bu dinleyici div.article öğesine 'article-open' class'ını ekleyip/çıkaracak (toogle).
+*/
+function haberYapici(paramHaber) {
+  // her bir haber için bir gövde oluşturacağız
+  // articles içine haber gövdesini ekleyeceğiz
+  const hDiv = document.createElement("div"); // + haber gövedesi oluşturacağız
+  const hTitle = document.createElement("h2"); // h2 p ...
+  const hDate = document.createElement("p");
+  const hPar1 = document.createElement("p");
+  const hPar2 = document.createElement("p");
+  const hPar3 = document.createElement("p");
+  const hBtn = document.createElement("span");
 
-const button =document.createElement("button")
-button.classList.add("expandButton")
-button.addEventListener("click",()=>{
-  button.classList.toggle("article-open")
-})
+  hDiv.append(hTitle, hDate, hPar1, hPar2, hPar3, hBtn);
+
+  hDiv.classList.add("article");
+  hDate.classList.add("tarih");
+  hBtn.classList.add("expandButton");
+
+  hTitle.textContent = paramHaber.baslik;
+  hDate.textContent = paramHaber.tarih;
+  hPar1.textContent = paramHaber.ilkParagraf;
+  hPar2.textContent = paramHaber.ikinciParagraf;
+  hPar3.textContent = paramHaber.ucuncuParagraf;
+  hBtn.textContent = "+";
+
+  hBtn.addEventListener("click", () => {
+    hDiv.classList.toggle("article-open");
+  });
+articlesContainer.appendChild(hDiv);
+  // Adım 3: Fonksiyonunuzdan bir öğe döndürmeyi unutmayın.
+  return articlesContainer;
+}
+/*
   
+  Adım 4: Fonksiyonunuzun dışında, tüm datayı döngüye sokun(loop). 
+  Bir div.article öğesi oluşturmak ve bunu div.articles içindeki DOM'a eklemek için
+  her yinelemede oluşturduğunuz bileşeninizi kullanacaksınız(bknz. index.html).
+*/
 
-haberYapici.appendChild(title);
-haberYapici.appendChild(date);
-haberYapici.appendChild(paragraph1);
-haberYapici.appendChild(paragraph2);
-haberYapici.appendChild(paragraph3);
-haberYapici.appendChild(button);
-for (let i = 0; i < component.length; i++) {
-  component[i].appendChild(haberYapici);
-}
-return component;
-}
-data.map(addnews);
+data.map(haberYapici);
